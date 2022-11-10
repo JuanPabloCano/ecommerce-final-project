@@ -23,4 +23,28 @@ export class ProductUseCases {
       console.log(error);
     }
   }
+
+  public async createProduct(product: ProductSchema): Promise<ProductSchema> {
+    try {
+      return await this.databaseRepository.create(product);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  public async updateProductById(id: string, product: ProductSchema): Promise<ProductSchema> {
+    try {
+      return await this.databaseRepository.updateById(id, product);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  public async deleteProductById(id: string): Promise<ProductSchema> {
+    try {
+      return await this.databaseRepository.deleteById(id);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }

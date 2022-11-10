@@ -8,17 +8,25 @@ export class ProductMongodbAdapter implements DatabaseRepository<ProductSchema> 
   constructor(@InjectModel('products') private readonly product: Model<ProductDocument>) {
   }
 
-  create(data: Partial<ProductSchema>, query?: Query): Promise<ProductSchema> {
-    return Promise.resolve(undefined);
+  async create(data: Partial<ProductSchema>, query?: Query): Promise<ProductSchema> {
+    try {
+      return await this.product.create(data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  deleteById(id: ID, query?: Query): Promise<ProductSchema> {
-    return Promise.resolve(undefined);
+  async deleteById(id: ID, query?: Query): Promise<ProductSchema> {
+    try {
+      return this.product.findByIdAndRemove(id);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async findAll(query?: Query): Promise<ProductSchema[]> {
     try {
-      return this.product.find({});
+      return this.product.find({}).select('-__v');
     } catch (error) {
       console.log(error);
     }
@@ -26,14 +34,20 @@ export class ProductMongodbAdapter implements DatabaseRepository<ProductSchema> 
 
   async findById(id: ID, query?: Query): Promise<ProductSchema> {
     try {
-      return this.product.findById(id);
+      return this.product.findById(id).select('-__v');
     } catch (error) {
       console.log(error);
     }
   }
 
-  updateById(id: ID, data: ProductSchema, query?: Query): Promise<ProductSchema> {
-    return Promise.resolve(undefined);
+  async updateById(id: ID, data: ProductSchema, query?: Query): Promise<ProductSchema> {
+    try {
+      return this.product.findByIdAndUpdate(id, {
+        $set: data,
+      }, { new: true }).select('-__v');
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 }
