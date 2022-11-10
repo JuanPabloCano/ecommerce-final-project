@@ -12,7 +12,7 @@ export class ProductUseCases {
     try {
       return await this.databaseRepository.findAll();
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -20,7 +20,7 @@ export class ProductUseCases {
     try {
       return await this.databaseRepository.findById(productId);
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -28,7 +28,7 @@ export class ProductUseCases {
     try {
       return await this.databaseRepository.create(product);
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -36,7 +36,7 @@ export class ProductUseCases {
     try {
       return await this.databaseRepository.updateById(id, product);
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -44,7 +44,7 @@ export class ProductUseCases {
     try {
       return await this.databaseRepository.deleteById(id);
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 }

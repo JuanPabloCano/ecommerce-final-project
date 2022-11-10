@@ -12,7 +12,7 @@ export class ProductMongodbAdapter implements DatabaseRepository<ProductSchema> 
     try {
       return await this.product.create(data);
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -20,7 +20,7 @@ export class ProductMongodbAdapter implements DatabaseRepository<ProductSchema> 
     try {
       return this.product.findByIdAndRemove(id);
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -28,7 +28,7 @@ export class ProductMongodbAdapter implements DatabaseRepository<ProductSchema> 
     try {
       return this.product.find({}).select('-__v');
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -36,7 +36,7 @@ export class ProductMongodbAdapter implements DatabaseRepository<ProductSchema> 
     try {
       return this.product.findById(id).select('-__v');
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -46,8 +46,7 @@ export class ProductMongodbAdapter implements DatabaseRepository<ProductSchema> 
         $set: data,
       }, { new: true }).select('-__v');
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
-
 }

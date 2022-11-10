@@ -1,6 +1,7 @@
 import { ProductUseCases } from '../../../../domain/useCases/product/product.usecases';
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { ProductSchema } from '../../../../domain/models/product/Product';
+import { CustomError } from '../../utils/exceptions/CustomError';
 
 @Controller({ path: '/api/products' })
 export class ProductHandler {
@@ -12,7 +13,7 @@ export class ProductHandler {
     try {
       return await this.productUseCases.findAllProducts();
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -21,7 +22,7 @@ export class ProductHandler {
     try {
       return await this.productUseCases.findProductById(id);
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -30,7 +31,7 @@ export class ProductHandler {
     try {
       return await this.productUseCases.createProduct(product);
     } catch (error) {
-      console.log(error);
+      throw new CustomError('Bad request', HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -39,7 +40,7 @@ export class ProductHandler {
     try {
       return await this.productUseCases.updateProductById(id, product);
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -48,7 +49,7 @@ export class ProductHandler {
     try {
       return await this.productUseCases.deleteProductById(id);
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 }
