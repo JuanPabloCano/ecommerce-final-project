@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ProductHandler } from '../../../infrastructure/entrypoints/rest-controller/product/product.handler';
 import { ProductUseCases } from '../../../domain/useCases/product/product.usecases';
-import { ProductMongodbAdapter } from '../../../infrastructure/driven-adapters/mongoDb/product/product.mongodb.adapter';
+import { ProductMongodbAdapter } from '../../../infrastructure/driven-adapters/mongoDB/product/product.mongodb.adapter';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Product } from '../../../domain/models/product/Product';

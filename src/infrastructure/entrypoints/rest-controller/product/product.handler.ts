@@ -2,6 +2,7 @@ import { ProductUseCases } from '../../../../domain/useCases/product/product.use
 import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { ProductSchema } from '../../../../domain/models/product/Product';
 import { CustomError } from '../../utils/exceptions/CustomError';
+import { ProductDTO } from '../../../driven-adapters/mongoDB/product/data/Product.dto';
 
 @Controller({ path: '/api/products' })
 export class ProductHandler {
@@ -27,7 +28,7 @@ export class ProductHandler {
   }
 
   @Post()
-  public async createProduct(@Body() product: ProductSchema): Promise<ProductSchema> {
+  public async createProduct(@Body() product: ProductDTO): Promise<ProductSchema> {
     try {
       return await this.productUseCases.createProduct(product);
     } catch (error) {
@@ -36,7 +37,7 @@ export class ProductHandler {
   }
 
   @Patch('/:id')
-  public async updateProductById(@Param('id') id: string, @Body() product: ProductSchema): Promise<ProductSchema> {
+  public async updateProductById(@Param('id') id: string, @Body() product: ProductDTO): Promise<ProductSchema> {
     try {
       return await this.productUseCases.updateProductById(id, product);
     } catch (error) {

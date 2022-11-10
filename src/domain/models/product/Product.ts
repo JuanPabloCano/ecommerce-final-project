@@ -7,25 +7,25 @@ export type ProductDocument = ProductSchema & Document
 export class ProductSchema {
 
   @Prop({ default: Date.now() })
-  private timestamp: Date;
+  readonly timestamp: Date;
 
   @Prop({ type: String, required: true, trim: true })
-  private name: string;
+  readonly name: string;
 
   @Prop({ type: String, required: true, trim: true })
-  private description: string;
+  readonly description: string;
 
   @Prop({ type: Number, required: true, default: 0 })
-  private code: number;
+  readonly code: number;
 
   @Prop({ type: String, required: true, trim: true })
-  private picture: string;
+  readonly picture: string;
 
   @Prop({ type: Number, required: true, default: 0 })
-  private price: number;
+  readonly price: number;
 
   @Prop({ type: Number, required: true, default: 0 })
-  private stock: number;
+  readonly stock: number;
 }
 
 export const Product = SchemaFactory.createForClass(ProductSchema);
