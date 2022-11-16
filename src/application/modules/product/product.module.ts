@@ -7,20 +7,24 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Product } from '../../../domain/models/product/Product';
 
 @Module({
-  imports: [ ConfigModule.forRoot({ isGlobal: true }),
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRoot(process.env.DB_URI),
-    MongooseModule.forFeature([ {
-      name: 'products',
-      schema: Product,
-    },
+    MongooseModule.forFeature([
+      {
+        name: 'products',
+        schema: Product,
+      },
     ]),
   ],
-  controllers: [ ProductHandler ],
-  providers: [ ProductUseCases, {
-    provide: 'DatabaseRepository',
-    useClass: ProductMongodbAdapter,
-  } ],
-  exports: [ ProductUseCases ],
+  controllers: [ProductHandler],
+  providers: [
+    ProductUseCases,
+    {
+      provide: 'DatabaseRepository',
+      useClass: ProductMongodbAdapter,
+    },
+  ],
+  exports: [ProductUseCases],
 })
-export class ProductModule {
-}
+export class ProductModule {}

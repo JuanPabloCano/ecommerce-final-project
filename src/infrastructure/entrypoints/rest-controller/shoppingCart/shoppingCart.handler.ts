@@ -2,14 +2,17 @@ import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post } from '@
 import { ShoppingCartUseCases } from '../../../../domain/useCases/shoppingCart/shoppingCart.usecases';
 import { ShoppingCartSchema } from '../../../../domain/models/shoppingCart/ShoppingCart';
 import { CustomError } from '../../utils/exceptions/CustomError';
+import { ShoppingCartDTO } from '../../../driven-adapters/mongoDB/shoppingCart/data/ShoppingCart.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('ShoppingCart')
 @Controller({ path: '/api/shoppingCart' })
 export class ShoppingCartHandler {
   constructor(private readonly shoppingCartUseCase: ShoppingCartUseCases) {
   }
 
   @Post()
-  public async createShoppingCart(@Body() shoppingCart: ShoppingCartSchema): Promise<ShoppingCartSchema> {
+  public async createShoppingCart(@Body() shoppingCart: ShoppingCartDTO): Promise<ShoppingCartSchema> {
     try {
       return await this.shoppingCartUseCase.createShoppingCart(shoppingCart);
     } catch (error) {
@@ -18,7 +21,7 @@ export class ShoppingCartHandler {
   }
 
   @Patch('/:id')
-  public async addProductToShoppingCart(@Param('id') id: string, @Body() shoppingCart: ShoppingCartSchema): Promise<ShoppingCartSchema> {
+  public async addProductToShoppingCart(@Param('id') id: string, @Body() shoppingCart: ShoppingCartDTO): Promise<ShoppingCartSchema> {
     try {
       return await this.shoppingCartUseCase.addProductToShoppingCart(id, shoppingCart);
     } catch (error) {

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ProductModule } from './product/product.module';
-import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/authModule';
 import { ConfigModule } from '@nestjs/config';
 import { ShoppingCartModule } from './shoppingCart/shoppingCart.module';
 
@@ -8,9 +8,8 @@ import { ShoppingCartModule } from './shoppingCart/shoppingCart.module';
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     ProductModule,
-    UserModule,
+    AuthModule,
     ShoppingCartModule,
   ],
 })
-export class AppModule {
-}
+export class AppModule {}

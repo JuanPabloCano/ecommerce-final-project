@@ -1,11 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type ProductDocument = ProductSchema & Document
+export type ProductDocument = ProductSchema & Document;
 
 @Schema()
 export class ProductSchema {
-
   @Prop({ default: Date.now() })
   readonly timestamp: Date;
 
@@ -14,7 +13,6 @@ export class ProductSchema {
 
   @Prop({ type: String, required: true, trim: true })
   readonly description: string;
-
   @Prop({ type: Number, required: true, default: 0 })
   readonly code: number;
 

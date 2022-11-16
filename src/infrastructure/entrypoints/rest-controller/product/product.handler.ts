@@ -3,7 +3,9 @@ import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post } from '@
 import { ProductSchema } from '../../../../domain/models/product/Product';
 import { CustomError } from '../../utils/exceptions/CustomError';
 import { ProductDTO } from '../../../driven-adapters/mongoDB/product/data/Product.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Products')
 @Controller({ path: '/api/products' })
 export class ProductHandler {
   constructor(private readonly productUseCases: ProductUseCases) {
