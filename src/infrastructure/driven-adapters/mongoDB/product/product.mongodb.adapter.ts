@@ -1,14 +1,19 @@
-import { DatabaseRepository, ID, Query } from '../../../../application/repository/MongoDB.repository';
-import { ProductDocument, ProductSchema } from '../../../../domain/models/product/Product';
+import { DatabaseRepository, ID, Query, } from '../../../../application/repository/MongoDB.repository';
+import { ProductDocument, ProductSchema, } from '../../../../domain/models/product/Product';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-export class ProductMongodbAdapter implements DatabaseRepository<ProductSchema> {
+export class ProductMongodbAdapter
+  implements DatabaseRepository<ProductSchema>
+{
+  constructor(
+    @InjectModel('products') private readonly product: Model<ProductDocument>,
+  ) {}
 
-  constructor(@InjectModel('products') private readonly product: Model<ProductDocument>) {
-  }
-
-  async create(data: Partial<ProductSchema>, query?: Query): Promise<ProductSchema> {
+  async create(
+    data: Partial<ProductSchema>,
+    query?: Query,
+  ): Promise<ProductSchema> {
     try {
       return await this.product.create(data);
     } catch (error) {
@@ -40,11 +45,21 @@ export class ProductMongodbAdapter implements DatabaseRepository<ProductSchema> 
     }
   }
 
-  async updateById(id: ID, data: ProductSchema, query?: Query): Promise<ProductSchema> {
+  async updateById(
+    id: ID,
+    data: ProductSchema,
+    query?: Query,
+  ): Promise<ProductSchema> {
     try {
-      return this.product.findByIdAndUpdate(id, {
-        $set: data,
-      }, { new: true }).select('-__v');
+      return this.product
+        .findByIdAndUpdate(
+          id,
+          {
+            $set: data,
+          },
+          { new: true },
+        )
+        .select('-__v');
     } catch (error) {
       throw new Error(error);
     }

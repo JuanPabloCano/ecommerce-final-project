@@ -4,8 +4,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User } from '../../../domain/models/user/User';
 import { AuthHandler } from '../../../infrastructure/entrypoints/rest-controller/auth/auth.handler';
 import { AuthUseCases } from '../../../domain/useCases/auth/auth.usecases';
-import { ProductMongodbAdapter } from '../../../infrastructure/driven-adapters/mongoDB/product/product.mongodb.adapter';
-import { AuthMongodbAdapter } from "../../../infrastructure/driven-adapters/mongoDB/auth/auth.mongodb.adapter";
+import { AuthMongodbAdapter } from '../../../infrastructure/driven-adapters/mongoDB/auth/auth.mongodb.adapter';
+import { JwtModule } from '@nestjs/jwt';
+import { JwtConstants } from '../../jwt/constants/jwt.constants';
+import { JwtStrategy } from '../../jwt/strategy/jwt.strategy';
 
 @Module({
   imports: [
@@ -17,15 +19,22 @@ import { AuthMongodbAdapter } from "../../../infrastructure/driven-adapters/mong
         schema: User,
       },
     ]),
+    JwtModule.registerAsync({
+      useFactory: () => ({
+        secret: JwtConstants.secret,
+        signOptions: { expiresIn: '1d' },
+      }),
+    }),
   ],
   controllers: [AuthHandler],
   providers: [
     AuthUseCases,
+    JwtStrategy,
     {
       provide: 'DatabaseRepository',
       useClass: AuthMongodbAdapter,
     },
   ],
-  exports: [AuthUseCases],
+  exports: [AuthUseCases, JwtStrategy],
 })
 export class AuthModule {}

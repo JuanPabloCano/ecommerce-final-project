@@ -4,16 +4,18 @@ import { UserSchema } from '../../models/user/User';
 import { Register } from '../../models/auth/Register';
 import { Login } from '../../models/auth/Login';
 import { compare, hash } from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthUseCases {
-
-  constructor(@Inject('DatabaseRepository') private readonly databaseRepository: DatabaseRepository<UserSchema>) {
-  }
+  constructor(
+    @Inject('DatabaseRepository')
+    private readonly databaseRepository: DatabaseRepository<UserSchema>,
+    private readonly jwtService: JwtService,
+  ) {}
 
   public async registerUser(userBody: Register): Promise<Register> {
     try {
-
       const { password, ...user } = userBody;
 
       const userParsed = {
@@ -27,18 +29,29 @@ export class AuthUseCases {
     }
   }
 
-  public async login(user: Login): Promise<Login> {
+  public async login(user: Login): Promise<any> {
     try {
-      const { password, email } = user;
+      const { email, password } = user;
       const isUserExist = await this.databaseRepository.findOne({ email });
 
-      if (!isUserExist) throw new HttpException('NOT_FOUND', HttpStatus.NOT_FOUND);
+      if (!isUserExist)
+        throw new HttpException('NOT_FOUND', HttpStatus.NOT_FOUND);
 
       const isChecked = await compare(password, isUserExist.password);
 
-      if (!isChecked) throw new HttpException('PASSWORD_INVALID', HttpStatus.FORBIDDEN);
+      if (!isChecked) throw new Error('Error');
 
-      return isUserExist;
+      const payload = {
+        name: isUserExist.name,
+        email: isUserExist.email,
+      };
+
+      const token = this.jwtService.sign(payload);
+
+      return {
+        user: isUserExist,
+        token,
+      };
     } catch (error) {
       throw new Error(error);
     }

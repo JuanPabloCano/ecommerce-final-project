@@ -4,9 +4,10 @@ import { ProductSchema } from '../../models/product/Product';
 
 @Injectable()
 export class ProductUseCases {
-
-  constructor(@Inject('DatabaseRepository') private readonly databaseRepository: DatabaseRepository<ProductSchema>) {
-  }
+  constructor(
+    @Inject('DatabaseRepository')
+    private readonly databaseRepository: DatabaseRepository<ProductSchema>,
+  ) {}
 
   public async findAllProducts(): Promise<ProductSchema[]> {
     try {
@@ -32,7 +33,10 @@ export class ProductUseCases {
     }
   }
 
-  public async updateProductById(id: string, product: ProductSchema): Promise<ProductSchema> {
+  public async updateProductById(
+    id: string,
+    product: ProductSchema,
+  ): Promise<ProductSchema> {
     try {
       return await this.databaseRepository.updateById(id, product);
     } catch (error) {
