@@ -1,11 +1,21 @@
 import { ProductUseCases } from '../../../../domain/useCases/product/product.usecases';
-import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { ProductSchema } from '../../../../domain/models/product/Product';
 import { CustomError } from '../../utils/exceptions/CustomError';
 import { ProductDTO } from '../../../driven-adapters/mongoDB/product/data/Product.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../../../../application/jwt/guard/jwt.guard';
 
-// @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
 @ApiTags('Products')
 @Controller({ path: '/api/products' })
@@ -32,6 +42,7 @@ export class ProductHandler {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   public async createProduct(
     @Body() product: ProductDTO,
@@ -43,6 +54,7 @@ export class ProductHandler {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch('/:id')
   public async updateProductById(
     @Param('id') id: string,
@@ -55,6 +67,7 @@ export class ProductHandler {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete('/:id')
   public async deleteProductById(
     @Param('id') id: string,

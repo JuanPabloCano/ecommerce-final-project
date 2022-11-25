@@ -22,7 +22,7 @@ import { JwtStrategy } from '../../jwt/strategy/jwt.strategy';
     JwtModule.registerAsync({
       useFactory: () => ({
         secret: JwtConstants.secret,
-        signOptions: { expiresIn: '1d' },
+        signOptions: { expiresIn: '3d' },
       }),
     }),
   ],

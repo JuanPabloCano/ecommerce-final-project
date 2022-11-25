@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { DatabaseRepository } from '../../../application/repository/MongoDB.repository';
-import { UserSchema } from '../../models/user/User';
+import { UserDocument } from '../../models/user/User';
 import { Register } from '../../models/auth/Register';
 import { Login } from '../../models/auth/Login';
 import { compare, hash } from 'bcrypt';
@@ -10,7 +10,7 @@ import { JwtService } from '@nestjs/jwt';
 export class AuthUseCases {
   constructor(
     @Inject('DatabaseRepository')
-    private readonly databaseRepository: DatabaseRepository<UserSchema>,
+    private readonly databaseRepository: DatabaseRepository<UserDocument>,
     private readonly jwtService: JwtService,
   ) {}
 
@@ -41,7 +41,11 @@ export class AuthUseCases {
 
       if (!isChecked) throw new Error('Error');
 
+      const userFlat = isUserExist.toObject();
+      delete userFlat.password;
+
       const payload = {
+        id: userFlat._id,
         name: isUserExist.name,
         email: isUserExist.email,
       };

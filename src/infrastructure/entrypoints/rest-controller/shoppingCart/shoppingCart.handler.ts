@@ -1,16 +1,28 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { ShoppingCartUseCases } from '../../../../domain/useCases/shoppingCart/shoppingCart.usecases';
 import { ShoppingCartSchema } from '../../../../domain/models/shoppingCart/ShoppingCart';
 import { CustomError } from '../../utils/exceptions/CustomError';
 import { ShoppingCartDTO } from '../../../driven-adapters/mongoDB/shoppingCart/data/ShoppingCart.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../../../../application/jwt/guard/jwt.guard';
 
-//@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
 @ApiTags('ShoppingCart')
 @Controller({ path: '/api/shoppingCart' })
 export class ShoppingCartHandler {
-  constructor(private readonly shoppingCartUseCase: ShoppingCartUseCases) {}
+  constructor(private readonly shoppingCartUseCase: ShoppingCartUseCases) {
+  }
 
   @Post()
   public async createShoppingCart(
