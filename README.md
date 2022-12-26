@@ -50,7 +50,7 @@ src
 |    |  |  |- shoppingCart.module.ts
 |    |  |- app.module.ts
 |    |- repository
-|    |  |- MongoDB.repository.ts
+|    |  |- Database.repository.ts
 |    |- swagger
 |    |  |- OpenApi.ts
 |--- domain

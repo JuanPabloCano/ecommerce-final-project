@@ -1,7 +1,7 @@
 import {
   DatabaseRepository,
   Query,
-} from '../../../../application/repository/MongoDB.repository';
+} from '../../../../application/repository/Database.repository';
 import { UserDocument, UserSchema } from '../../../../domain/models/user/User';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';

@@ -21,8 +21,7 @@ import { JwtAuthGuard } from '../../../../application/jwt/guard/jwt.guard';
 @ApiTags('ShoppingCart')
 @Controller({ path: '/api/shoppingCart' })
 export class ShoppingCartHandler {
-  constructor(private readonly shoppingCartUseCase: ShoppingCartUseCases) {
-  }
+  constructor(private readonly shoppingCartUseCase: ShoppingCartUseCases) {}
 
   @Post()
   public async createShoppingCart(

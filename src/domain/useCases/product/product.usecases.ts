@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { DatabaseRepository } from '../../../application/repository/MongoDB.repository';
+import { DatabaseRepository } from '../../../application/repository/Database.repository';
 import { ProductSchema } from '../../models/product/Product';
 
 @Injectable()

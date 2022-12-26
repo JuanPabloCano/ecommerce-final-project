@@ -1,14 +1,17 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { DatabaseRepository } from '../../../application/repository/MongoDB.repository';
+import { DatabaseRepository } from '../../../application/repository/Database.repository';
 import { ShoppingCartSchema } from '../../models/shoppingCart/ShoppingCart';
 
 @Injectable()
 export class ShoppingCartUseCases {
+  constructor(
+    @Inject('DatabaseRepository')
+    private readonly databaseRepository: DatabaseRepository<ShoppingCartSchema>,
+  ) {}
 
-  constructor(@Inject('DatabaseRepository') private readonly databaseRepository: DatabaseRepository<ShoppingCartSchema>) {
-  }
-
-  public async createShoppingCart(shoppingCart: ShoppingCartSchema): Promise<ShoppingCartSchema> {
+  public async createShoppingCart(
+    shoppingCart: ShoppingCartSchema,
+  ): Promise<ShoppingCartSchema> {
     try {
       return await this.databaseRepository.create(shoppingCart);
     } catch (error) {
@@ -16,7 +19,10 @@ export class ShoppingCartUseCases {
     }
   }
 
-  public async addProductToShoppingCart(id: string, data: ShoppingCartSchema): Promise<ShoppingCartSchema> {
+  public async addProductToShoppingCart(
+    id: string,
+    data: ShoppingCartSchema,
+  ): Promise<ShoppingCartSchema> {
     try {
       return await this.databaseRepository.updateById(id, data);
     } catch (error) {

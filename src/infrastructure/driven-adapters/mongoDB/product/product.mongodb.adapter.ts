@@ -1,5 +1,12 @@
-import { DatabaseRepository, ID, Query, } from '../../../../application/repository/MongoDB.repository';
-import { ProductDocument, ProductSchema, } from '../../../../domain/models/product/Product';
+import {
+  DatabaseRepository,
+  ID,
+  Query,
+} from '../../../../application/repository/Database.repository';
+import {
+  ProductDocument,
+  ProductSchema,
+} from '../../../../domain/models/product/Product';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 

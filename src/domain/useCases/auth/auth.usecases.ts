@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
-import { DatabaseRepository } from '../../../application/repository/MongoDB.repository';
+import { DatabaseRepository } from '../../../application/repository/Database.repository';
 import { UserDocument } from '../../models/user/User';
 import { Register } from '../../models/auth/Register';
 import { Login } from '../../models/auth/Login';
