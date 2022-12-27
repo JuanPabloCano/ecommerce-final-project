@@ -45,7 +45,7 @@ export class ShoppingCartHandler {
         shoppingCart,
       );
     } catch (error) {
-      throw new Error(error);
+      throw new CustomError('Bad request', HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -65,7 +65,7 @@ export class ShoppingCartHandler {
     try {
       return await this.shoppingCartUseCase.findShoppingCartById(id);
     } catch (error) {
-      throw new Error(error);
+      throw new CustomError('Bad request', HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -76,7 +76,7 @@ export class ShoppingCartHandler {
     try {
       return await this.shoppingCartUseCase.deleteShoppingCartById(id);
     } catch (error) {
-      throw new Error(error);
+      throw new CustomError('Bad request', HttpStatus.BAD_REQUEST);
     }
   }
 }

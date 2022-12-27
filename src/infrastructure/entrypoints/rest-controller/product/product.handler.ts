@@ -38,7 +38,7 @@ export class ProductHandler {
     try {
       return await this.productUseCases.findProductById(id);
     } catch (error) {
-      throw new Error(error);
+      throw new CustomError('Bad request', HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -63,7 +63,7 @@ export class ProductHandler {
     try {
       return await this.productUseCases.updateProductById(id, product);
     } catch (error) {
-      throw new Error(error);
+      throw new CustomError('Bad request', HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -75,7 +75,7 @@ export class ProductHandler {
     try {
       return await this.productUseCases.deleteProductById(id);
     } catch (error) {
-      throw new Error(error);
+      throw new CustomError('Bad request', HttpStatus.BAD_REQUEST);
     }
   }
 }

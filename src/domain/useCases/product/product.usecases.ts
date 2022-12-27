@@ -1,6 +1,7 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { DatabaseRepository } from '../../../application/repository/Database.repository';
 import { ProductSchema } from '../../models/product/Product';
+import { CustomError } from '../../../infrastructure/entrypoints/utils/exceptions/CustomError';
 
 @Injectable()
 export class ProductUseCases {
