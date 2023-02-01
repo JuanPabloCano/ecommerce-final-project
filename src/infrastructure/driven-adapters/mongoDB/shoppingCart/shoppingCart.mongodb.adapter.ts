@@ -1,12 +1,13 @@
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { DatabaseRepository, ID, Query, } from '../../../../application/repository/Database.repository';
+import { KEY } from '../../../../application/shared/constants/Key';
 import { ShoppingCartDocument } from '../../../../domain/models/shoppingCart/ShoppingCart';
 
 export class ShoppingCartMongodbAdapter
   implements DatabaseRepository<ShoppingCartDocument> {
   constructor(
-    @InjectModel('shoppingCart')
+    @InjectModel(KEY.SHOPPING_CART)
     private readonly shoppingCart: Model<ShoppingCartDocument>,
   ) {
   }

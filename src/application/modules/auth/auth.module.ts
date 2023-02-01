@@ -1,40 +1,27 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User } from '../../../domain/models/user/User';
-import { AuthHandler } from '../../../infrastructure/entrypoints/rest-controller/auth/auth.handler';
 import { AuthUseCases } from '../../../domain/useCases/auth/auth.usecases';
-import { AuthMongodbAdapter } from '../../../infrastructure/driven-adapters/mongoDB/auth/auth.mongodb.adapter';
-import { JwtModule } from '@nestjs/jwt';
-import { JwtConstants } from '../../jwt/constants/jwt.constants';
+import { AuthHandler } from '../../../infrastructure/entrypoints/rest-controller/auth/auth.handler';
+import { KEY } from '../../shared/constants/Key';
 import { JwtStrategy } from '../../jwt/strategy/jwt.strategy';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRoot(process.env.DB_URI),
     MongooseModule.forFeature([
-      {
-        name: 'user',
-        schema: User,
-      },
+      { name: KEY.USER, schema: User, },
     ]),
     JwtModule.registerAsync({
       useFactory: () => ({
-        secret: JwtConstants.secret,
+        secret: KEY.SECRET,
         signOptions: { expiresIn: '3d' },
       }),
     }),
   ],
-  controllers: [AuthHandler],
-  providers: [
-    AuthUseCases,
-    JwtStrategy,
-    {
-      provide: 'DatabaseRepository',
-      useClass: AuthMongodbAdapter,
-    },
-  ],
-  exports: [AuthUseCases, JwtStrategy],
+  controllers: [ AuthHandler ],
+  providers: [ AuthUseCases, JwtStrategy, ],
+  exports: [ AuthUseCases, JwtStrategy ],
 })
-export class AuthModule {}
+export class AuthModule {
+}

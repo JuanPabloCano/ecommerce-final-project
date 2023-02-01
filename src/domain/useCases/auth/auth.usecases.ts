@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { DatabaseRepository } from '../../../application/repository/Database.repository';
+import { KEY } from '../../../application/shared/constants/Key';
 import { UserDocument } from '../../models/user/User';
 import { Register } from '../../models/auth/Register';
 import { Login } from '../../models/auth/Login';
@@ -9,7 +10,7 @@ import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class AuthUseCases {
   constructor(
-    @Inject('DatabaseRepository')
+    @Inject(KEY.DATABASE_REPOSITORY)
     private readonly databaseRepository: DatabaseRepository<UserDocument>,
     private readonly jwtService: JwtService,
   ) {}

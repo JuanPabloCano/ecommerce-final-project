@@ -1,20 +1,22 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DatabaseRepository } from '../../../application/repository/Database.repository';
+import { KEY } from '../../../application/shared/constants/Key';
 import { ShoppingCartSchema } from '../../models/shoppingCart/ShoppingCart';
 
 @Injectable()
 export class ShoppingCartUseCases {
   constructor(
-    @Inject('DatabaseRepository')
+    @Inject(KEY.DATABASE_REPOSITORY)
     private readonly databaseRepository: DatabaseRepository<ShoppingCartSchema>,
-  ) {}
+  ) {
+  }
 
   public async createShoppingCart(
     shoppingCart: ShoppingCartSchema,
   ): Promise<ShoppingCartSchema> {
     try {
       return await this.databaseRepository.create(shoppingCart);
-    } catch (error) {
+    } catch ( error ) {
       throw new Error(error);
     }
   }
@@ -25,7 +27,7 @@ export class ShoppingCartUseCases {
   ): Promise<ShoppingCartSchema> {
     try {
       return await this.databaseRepository.updateById(id, data);
-    } catch (error) {
+    } catch ( error ) {
       throw new Error(error);
     }
   }
@@ -33,7 +35,7 @@ export class ShoppingCartUseCases {
   public async findAllShoppingCarts(): Promise<ShoppingCartSchema[]> {
     try {
       return await this.databaseRepository.findAll();
-    } catch (error) {
+    } catch ( error ) {
       throw new Error(error);
     }
   }
@@ -41,7 +43,7 @@ export class ShoppingCartUseCases {
   public async findShoppingCartById(id: string): Promise<ShoppingCartSchema> {
     try {
       return await this.databaseRepository.findById(id);
-    } catch (error) {
+    } catch ( error ) {
       throw new Error(error);
     }
   }
@@ -49,7 +51,7 @@ export class ShoppingCartUseCases {
   public async deleteShoppingCartById(id: string): Promise<ShoppingCartSchema> {
     try {
       return await this.databaseRepository.deleteById(id);
-    } catch (error) {
+    } catch ( error ) {
       throw new Error(error);
     }
   }

@@ -36,7 +36,7 @@ src
 |--- application
 |    |- jwt
 |    |  |- constants
-|    |  |  |- jwt.constants.ts
+|    |  |  |- constants.ts
 |    |  |- guard
 |    |  |  |- jwt.guard.ts
 |    |  |- strategy
