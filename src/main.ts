@@ -11,13 +11,15 @@ async function bootstrap() {
   const document = OpenApi.swaggerConfig(app);
   SwaggerModule.setup('/', app, document);
   app.useGlobalPipes(
-    new ValidationPipe({
-      transform: true,
-    }),
+      new ValidationPipe({
+        transform: true,
+        whitelist: true,
+        forbidNonWhitelisted: true
+      }),
   );
   await app.listen(PORT, () =>
-    console.log(`Open server on http://localhost:${PORT}/`),
+      console.log(`Open server on http://localhost:${ PORT }/`),
   );
 }
 
-bootstrap();
+(async () => bootstrap())();

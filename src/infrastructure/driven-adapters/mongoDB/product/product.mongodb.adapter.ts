@@ -3,24 +3,21 @@ import {
   ID,
   Query,
 } from '../../../../application/repository/Database.repository';
-import {
-  ProductDocument,
-  ProductSchema,
-} from '../../../../domain/models/product/Product';
+import { ProductDocument } from '../../../../domain/models/product/Product';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 export class ProductMongodbAdapter
-  implements DatabaseRepository<ProductSchema>
+  implements DatabaseRepository<ProductDocument>
 {
   constructor(
     @InjectModel('products') private readonly product: Model<ProductDocument>,
   ) {}
 
   async create(
-    data: Partial<ProductSchema>,
+    data: Partial<ProductDocument>,
     query?: Query,
-  ): Promise<ProductSchema> {
+  ): Promise<ProductDocument> {
     try {
       return await this.product.create(data);
     } catch (error) {
@@ -28,7 +25,7 @@ export class ProductMongodbAdapter
     }
   }
 
-  async deleteById(id: ID, query?: Query): Promise<ProductSchema> {
+  async deleteById(id: ID, query?: Query): Promise<ProductDocument> {
     try {
       return this.product.findByIdAndRemove(id);
     } catch (error) {
@@ -36,7 +33,7 @@ export class ProductMongodbAdapter
     }
   }
 
-  async findAll(query?: Query): Promise<ProductSchema[]> {
+  async findAll(query?: Query): Promise<ProductDocument[]> {
     try {
       return this.product.find({}).select('-__v');
     } catch (error) {
@@ -44,7 +41,7 @@ export class ProductMongodbAdapter
     }
   }
 
-  async findById(id: ID, query?: Query): Promise<ProductSchema> {
+  async findById(id: ID, query?: Query): Promise<ProductDocument> {
     try {
       return this.product.findById(id).select('-__v');
     } catch (error) {
@@ -54,9 +51,9 @@ export class ProductMongodbAdapter
 
   async updateById(
     id: ID,
-    data: ProductSchema,
+    data: ProductDocument,
     query?: Query,
-  ): Promise<ProductSchema> {
+  ): Promise<ProductDocument> {
     try {
       return this.product
         .findByIdAndUpdate(
