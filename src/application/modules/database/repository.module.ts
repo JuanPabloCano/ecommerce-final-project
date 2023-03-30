@@ -9,7 +9,7 @@ import { ProductMongodbAdapter } from '../../../infrastructure/driven-adapters/m
 import {
   ShoppingCartMongodbAdapter
 } from '../../../infrastructure/driven-adapters/mongoDB/shoppingCart/shoppingCart.mongodb.adapter';
-import { KEY } from '../../shared/constants/Key';
+import { KEY } from '../../shared/enums/Key';
 
 @Global()
 @Module({
@@ -23,11 +23,11 @@ import { KEY } from '../../shared/constants/Key';
     ]),
   ],
   providers: [
-    { provide: KEY.DATABASE_REPOSITORY, useClass: ProductMongodbAdapter },
-    { provide: KEY.DATABASE_REPOSITORY, useClass: AuthMongodbAdapter, },
-    { provide: KEY.DATABASE_REPOSITORY, useClass: ShoppingCartMongodbAdapter, }
+    { provide: KEY.PRODUCT_REPOSITORY, useClass: ProductMongodbAdapter },
+    { provide: KEY.AUTH_REPOSITORY, useClass: AuthMongodbAdapter, },
+    { provide: KEY.SHOPPING_CART_REPOSITORY, useClass: ShoppingCartMongodbAdapter, }
   ],
-  exports: [ KEY.DATABASE_REPOSITORY ]
+  exports: [ KEY.PRODUCT_REPOSITORY, KEY.AUTH_REPOSITORY, KEY.SHOPPING_CART_REPOSITORY ]
 })
 export class RepositoryModule {
 }

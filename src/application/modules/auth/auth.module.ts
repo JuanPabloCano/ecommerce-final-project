@@ -4,8 +4,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User } from '../../../domain/models/user/User';
 import { AuthUseCases } from '../../../domain/useCases/auth/auth.usecases';
 import { AuthHandler } from '../../../infrastructure/entrypoints/rest-controller/auth/auth.handler';
-import { KEY } from '../../shared/constants/Key';
-import { JwtStrategy } from '../../jwt/strategy/jwt.strategy';
+import { KEY } from '../../shared/enums/Key';
+import { JwtStrategy } from '../../../domain/useCases/jwt/strategy/jwt.strategy';
 
 @Module({
   imports: [

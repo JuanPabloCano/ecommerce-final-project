@@ -14,7 +14,7 @@ import { ProductSchema } from '../../../../domain/models/product/Product';
 import { CustomError } from '../../utils/exceptions/CustomError';
 import { ProductDTO } from '../../../driven-adapters/mongoDB/product/data/Product.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../../../../application/jwt/guard/jwt.guard';
+import { JwtAuthGuard } from '../../../../domain/useCases/jwt/guard/jwt.guard';
 
 @ApiBearerAuth()
 @ApiTags('Products')

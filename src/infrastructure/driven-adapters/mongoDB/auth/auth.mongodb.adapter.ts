@@ -1,7 +1,7 @@
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { DatabaseRepository, Query, } from '../../../../application/repository/Database.repository';
-import { KEY } from '../../../../application/shared/constants/Key';
+import { KEY } from '../../../../application/shared/enums/Key';
 import { UserDocument } from '../../../../domain/models/user/User';
 
 export class AuthMongodbAdapter implements DatabaseRepository<UserDocument> {

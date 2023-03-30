@@ -14,7 +14,7 @@ import { ShoppingCartSchema } from '../../../../domain/models/shoppingCart/Shopp
 import { CustomError } from '../../utils/exceptions/CustomError';
 import { ShoppingCartDTO } from '../../../driven-adapters/mongoDB/shoppingCart/data/ShoppingCart.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../../../../application/jwt/guard/jwt.guard';
+import { JwtAuthGuard } from '../../../../domain/useCases/jwt/guard/jwt.guard';
 
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()

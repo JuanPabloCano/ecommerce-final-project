@@ -1,10 +1,11 @@
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule } from '@nestjs/swagger';
-import { AppModule } from './application/modules/app.module';
-import { OpenApi } from './application/swagger/OpenApi';
+import { AppModule } from './modules/app.module';
+import { UTIL } from './shared/enums/Util';
+import { OpenApi } from './swagger/OpenApi';
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || UTIL.PORT;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

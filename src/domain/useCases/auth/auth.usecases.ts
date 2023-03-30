@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { DatabaseRepository } from '../../../application/repository/Database.repository';
-import { KEY } from '../../../application/shared/constants/Key';
+import { KEY } from '../../../application/shared/enums/Key';
 import { UserDocument } from '../../models/user/User';
 import { Register } from '../../models/auth/Register';
 import { Login } from '../../models/auth/Login';
@@ -10,7 +10,7 @@ import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class AuthUseCases {
   constructor(
-    @Inject(KEY.DATABASE_REPOSITORY)
+    @Inject(KEY.AUTH_REPOSITORY)
     private readonly databaseRepository: DatabaseRepository<UserDocument>,
     private readonly jwtService: JwtService,
   ) {}
@@ -35,12 +35,15 @@ export class AuthUseCases {
       const { email, password } = user;
       const isUserExist = await this.databaseRepository.findOne({ email });
 
-      if (!isUserExist)
+      if (!isUserExist){
         throw new HttpException('NOT_FOUND', HttpStatus.NOT_FOUND);
+      }
 
       const isChecked = await compare(password, isUserExist.password);
 
-      if (!isChecked) throw new Error('Error');
+      if (!isChecked) {
+        throw new Error('Error');
+      }
 
       const userFlat = isUserExist.toObject();
       delete userFlat.password;

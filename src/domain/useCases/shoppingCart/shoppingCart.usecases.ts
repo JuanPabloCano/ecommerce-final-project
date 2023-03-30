@@ -1,12 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DatabaseRepository } from '../../../application/repository/Database.repository';
-import { KEY } from '../../../application/shared/constants/Key';
+import { KEY } from '../../../application/shared/enums/Key';
 import { ShoppingCartSchema } from '../../models/shoppingCart/ShoppingCart';
 
 @Injectable()
 export class ShoppingCartUseCases {
   constructor(
-    @Inject(KEY.DATABASE_REPOSITORY)
+    @Inject(KEY.SHOPPING_CART_REPOSITORY)
     private readonly databaseRepository: DatabaseRepository<ShoppingCartSchema>,
   ) {
   }
